@@ -41,6 +41,7 @@ dependencies:
   firebase_messaging: ^14.2.1
   image_picker: ^0.8.6
   fluttertoast: ^8.1.2
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:

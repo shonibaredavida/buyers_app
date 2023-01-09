@@ -1,8 +1,13 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trial/global/global.dart';
+import 'package:trial/mainScreens/home_screen.dart';
 import 'package:trial/widgets/custom_text_field.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fStorage;
 
@@ -20,6 +25,8 @@ class _SignupTaPageState extends State<SignupTaPage> {
   String downloadUrlImage = "";
   XFile? imgXFile;
   final ImagePicker imagePicker = ImagePicker();
+  bool dev = true;
+
   getImageFromGallry() async {
     imgXFile = await imagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
@@ -27,9 +34,50 @@ class _SignupTaPageState extends State<SignupTaPage> {
     });
   }
 
+  saveInfoToFireStoreAndLocally(User currentUser) async {
+// save to firestore
+    FirebaseFirestore.instance.collection("users").doc(currentUser.uid).set({
+      "uid": currentUser.uid,
+      "email": currentUser.email,
+      "name": namecontroller.text.trim(),
+      "photoUrl": downloadUrlImage,
+      "status": "approved",
+      "userCart": ["initialValue"],
+    });
+
+// save locally
+    sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences!.setString("uid", currentUser.uid);
+    await sharedPreferences!.setString("email", currentUser.email!);
+    await sharedPreferences!.setString("name", namecontroller.text.trim());
+    await sharedPreferences!.setString("photoURL", downloadUrlImage);
+    await sharedPreferences!.setStringList("userCart", ["initialValue"]);
+// route to home page
+    Navigator.push(context, MaterialPageRoute(builder: (c) => HomeScreen()));
+  }
+
+  saveInformationToDatabase(email, password) async {
+    //authenticating the user using firebase
+    User? currentUser;
+    await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((auth) {
+      currentUser = auth.user;
+    }).catchError((errorMessage) {
+      Fluttertoast.showToast(msg: "Error Occured: \n $errorMessage");
+    });
+
+    if (currentUser != null) {
+      if (dev) print("jbdb");
+      //save the user information to Database n save locally
+      saveInfoToFireStoreAndLocally(currentUser!);
+    }
+  }
+
   formValidation() async {
     if (imgXFile == null) // no image selected
     {
+      if (dev) print('SELECT pix');
       Fluttertoast.showToast(msg: "Pls Select an Image");
     } else {
       if (emailController.text.isNotEmpty &&
@@ -37,10 +85,10 @@ class _SignupTaPageState extends State<SignupTaPage> {
           confirmPasswordController.text.isNotEmpty &&
           passwordController.text.isNotEmpty) {
         // email n name, password, confirmatio n given
-        //upload pix, get user info to firebase
-
         if (passwordController.text == confirmPasswordController.text) {
-          // password n confirmation field are same
+          //password n confirmation field are same
+
+          //1~ uploading pix and downloading Pix URL,
           String filename = DateTime.now().microsecondsSinceEpoch.toString();
           fStorage.Reference storageRef = fStorage.FirebaseStorage.instance
               .ref()
@@ -53,6 +101,10 @@ class _SignupTaPageState extends State<SignupTaPage> {
           await taskSnapshot.ref.getDownloadURL().then((urlImage) {
             downloadUrlImage = urlImage;
           });
+          if (dev) print("sving to db");
+          //2~  Upload user info to firebase
+          saveInformationToDatabase(
+              emailController.text.trim(), passwordController.text.trim());
         } else {
           // password n confirmation field are not match
           Fluttertoast.showToast(
