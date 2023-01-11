@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trial/authScreens/login_tab_page.dart';
+import 'package:trial/global/global.dart';
+import 'package:trial/splashScreen/my_splash_screen.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -21,16 +26,20 @@ class _MyDrawerState extends State<MyDrawer> {
               bottom: 12,
             ),
             child: Column(
-              children: const [
-                CircleAvatar(
-                  radius: 65,
-                  backgroundImage: NetworkImage(
-                      "https://d32qe1r3a676y7.cloudfront.net/eyJidWNrZXQiOiJibG9nLWVjb3RyZWUiLCJrZXkiOiAiYmxvZy8wMDAxLzAxL2FkNDZkYmI0NDdjZDBlOWE2YWVlY2Q2NGNjMmJkMzMyYjBjYmNiNzkuanBlZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6IDkwMCwiaGVpZ2h0IjowLCJmaXQiOiJjb3ZlciJ9fX0="),
+              children: [
+                SizedBox(
+                  height: 130,
+                  width: 130,
+                  child: CircleAvatar(
+                    radius: 65,
+                    foregroundImage:
+                        NetworkImage(sharedPreferences!.getString("photoUrl")!),
+                  ),
                 ),
                 SizedBox(height: 12),
                 Text(
-                  "Username",
-                  style: TextStyle(
+                  sharedPreferences!.getString("name")!,
+                  style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
@@ -42,7 +51,7 @@ class _MyDrawerState extends State<MyDrawer> {
           Container(
             padding: const EdgeInsets.only(top: 1),
             child: Column(
-              children: const [
+              children: [
                 Divider(height: 10, thickness: 2, color: Colors.grey),
 
                 //Home
@@ -102,7 +111,11 @@ class _MyDrawerState extends State<MyDrawer> {
                         style: TextStyle(
                           color: Colors.grey,
                         )),
-                    onTap: null),
+                    onTap: () {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const MySplashScreen()));
+                    }),
               ],
             ),
           ),

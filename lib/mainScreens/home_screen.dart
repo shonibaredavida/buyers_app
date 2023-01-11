@@ -36,7 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: const Text(""),
+      body: const CircleAvatar(
+        radius: 65,
+      ),
     );
   }
 }

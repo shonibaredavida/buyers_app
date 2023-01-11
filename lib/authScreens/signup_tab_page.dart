@@ -7,9 +7,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trial/global/global.dart';
-import 'package:trial/mainScreens/home_screen.dart';
+import 'package:trial/splashScreen/my_splash_screen.dart';
 import 'package:trial/widgets/custom_text_field.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fStorage;
+import 'package:trial/widgets/loading_dialog.dart';
 
 class SignupTaPage extends StatefulWidget {
   @override
@@ -50,10 +51,11 @@ class _SignupTaPageState extends State<SignupTaPage> {
     await sharedPreferences!.setString("uid", currentUser.uid);
     await sharedPreferences!.setString("email", currentUser.email!);
     await sharedPreferences!.setString("name", namecontroller.text.trim());
-    await sharedPreferences!.setString("photoURL", downloadUrlImage);
+    await sharedPreferences!.setString("photoUrl", downloadUrlImage);
     await sharedPreferences!.setStringList("userCart", ["initialValue"]);
 // route to home page
-    Navigator.push(context, MaterialPageRoute(builder: (c) => HomeScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (c) => MySplashScreen()));
   }
 
   saveInformationToDatabase(email, password) async {
@@ -64,11 +66,12 @@ class _SignupTaPageState extends State<SignupTaPage> {
         .then((auth) {
       currentUser = auth.user;
     }).catchError((errorMessage) {
+      Navigator.of(context).pop();
       Fluttertoast.showToast(msg: "Error Occured: \n $errorMessage");
     });
 
     if (currentUser != null) {
-      if (dev) print("jbdb");
+      if (dev) print("logged in `");
       //save the user information to Database n save locally
       saveInfoToFireStoreAndLocally(currentUser!);
     }
@@ -87,7 +90,13 @@ class _SignupTaPageState extends State<SignupTaPage> {
         // email n name, password, confirmatio n given
         if (passwordController.text == confirmPasswordController.text) {
           //password n confirmation field are same
-
+          showDialog(
+              context: context,
+              builder: (c) {
+                return const LoadingDialogWidget(
+                  message: "Registering your Account",
+                );
+              });
           //1~ uploading pix and downloading Pix URL,
           String filename = DateTime.now().microsecondsSinceEpoch.toString();
           fStorage.Reference storageRef = fStorage.FirebaseStorage.instance
@@ -101,7 +110,8 @@ class _SignupTaPageState extends State<SignupTaPage> {
           await taskSnapshot.ref.getDownloadURL().then((urlImage) {
             downloadUrlImage = urlImage;
           });
-          if (dev) print("sving to db");
+          if (dev) print("saving to db");
+
           //2~  Upload user info to firebase
           saveInformationToDatabase(
               emailController.text.trim(), passwordController.text.trim());
