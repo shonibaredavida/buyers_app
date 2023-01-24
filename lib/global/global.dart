@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences? sharedPreferences;
@@ -18,3 +19,12 @@ final itemsImagesList = [
   "slider/12.jpg",
   "slider/13.jpg",
 ];
+
+bool dev = true;
+
+SizedBox sizedBox({double? height, double? width}) {
+  return SizedBox(
+    height: height ?? 1,
+    width: width ?? 0,
+  );
+}
