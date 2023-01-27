@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/items_models.dart';
+import 'package:trial/widgets/appbar_cart_badget.dart';
 
 class ItemsDetailsScreen extends StatefulWidget {
   ItemsDetailsScreen({this.model});
@@ -16,23 +17,7 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
   Widget build(BuildContext context) {
     int counterLimit = 1;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.model!.itemTitle.toString()),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Colors.green,
-                  Colors.black,
-                  Colors.red,
-                ],
-                begin: FractionalOffset(0.0, 0.0),
-                end: FractionalOffset(1.0, 0.0),
-                // stops: [0.0, 1.0],  #check
-                tileMode: TileMode.clamp),
-          ),
-        ),
-      ),
+      appBar: AppBarWithCartBadge(sellerUID: widget.model!.sellerUID),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           if (dev) print(" WE WE WE WE adding Item to cart");
@@ -56,21 +41,31 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
               ),
             ),
             sizedBox(height: 10),
-            //implement specific number to be added to cart
-            /*  CartStepperInt(
-              count: counterLimit,
-              didChangeCount: (cartNumber) {
-                if (cartNumber < 0) {
-                  if (dev) print(" WE WE WE WE brands exist object");
-                  Fluttertoast.showToast(msg: "dfbbdfjb");
-                  return;
-                }
+            //implement specific number to be
+            //added to cart
 
-                setState(() {
-                  counterLimit = cartNumber;
-                });
-              },
-            ), */
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CartStepperInt(
+                size: 50,
+                deActiveBackgroundColor: Colors.red,
+                activeBackgroundColor: Colors.pinkAccent,
+                activeForegroundColor: Colors.white,
+                count: counterLimit,
+                didChangeCount: (value) {
+                  if (value < 1) {
+                    if (dev) print(" WE WE WE WE brands exist object");
+                    Fluttertoast.showToast(msg: "dfbbdfjb");
+                    return;
+                  }
+
+                  setState(() {
+                    counterLimit = value;
+                  });
+                },
+              ),
+            ),
+
             sizedBox(),
 
             Padding(
@@ -112,6 +107,7 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
                 ),
               ),
             ),
+            sizedBox(height: 10),
           ]),
         ),
       ),
