@@ -1,6 +1,7 @@
 import 'package:cart_stepper/cart_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:trial/assistant_method/add_item_to_cart.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/items_models.dart';
 import 'package:trial/widgets/appbar_cart_badget.dart';
@@ -13,16 +14,26 @@ class ItemsDetailsScreen extends StatefulWidget {
 }
 
 class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
+  int counterLimit = 1;
+  CartMethods cartMethods = CartMethods();
   @override
   Widget build(BuildContext context) {
-    int counterLimit = 1;
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBarWithCartBadge(sellerUID: widget.model!.sellerUID),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          if (dev) print(" WE WE WE WE adding Item to cart");
+          int itemCounter = counterLimit;
           //add to cart increase the number per click
+          //check if item is in cart
+
+          //if not add to cart
+          cartMethods.addItemToCart(
+              itemID: widget.model!.itemID.toString(),
+              itemCounter: itemCounter,
+              context: context);
+
+          if (dev) print(" WE WE WE WE adding Item to cart");
         },
         label: const Text("Add to Cart"),
         icon: const Icon(
@@ -45,25 +56,27 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
             //implement specific number to be
             //added to cart
 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CartStepperInt(
-                size: 50,
-                deActiveBackgroundColor: Colors.red,
-                activeBackgroundColor: Colors.pinkAccent,
-                activeForegroundColor: Colors.white,
-                count: counterLimit,
-                didChangeCount: (value) {
-                  if (value < 1) {
-                    if (dev) print(" WE WE WE WE brands exist object");
-                    Fluttertoast.showToast(msg: "dfbbdfjb");
-                    return;
-                  }
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CartStepperInt(
+                  size: 50,
+                  deActiveBackgroundColor: Colors.red,
+                  activeBackgroundColor: Colors.pinkAccent,
+                  activeForegroundColor: Colors.white,
+                  count: counterLimit,
+                  didChangeCount: (value) {
+                    if (value < 1) {
+                      if (dev) print(" WE WE WE WE brands exist object");
+                      Fluttertoast.showToast(msg: "dfbbdfjb");
+                      return;
+                    }
 
-                  setState(() {
-                    counterLimit = value;
-                  });
-                },
+                    setState(() {
+                      counterLimit = value;
+                    });
+                  },
+                ),
               ),
             ),
 
