@@ -17,6 +17,7 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
   Widget build(BuildContext context) {
     int counterLimit = 1;
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBarWithCartBadge(sellerUID: widget.model!.sellerUID),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -86,7 +87,9 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
                 widget.model!.longDescription.toString(),
                 textAlign: TextAlign.justify,
                 style: const TextStyle(
-                    fontWeight: FontWeight.normal, fontSize: 15),
+                    color: Colors.grey,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15),
               ),
             ),
             Padding(
