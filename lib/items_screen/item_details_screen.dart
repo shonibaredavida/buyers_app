@@ -1,6 +1,8 @@
 import 'package:cart_stepper/cart_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:trial/assistant_method/cart_item_counter.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/items_models.dart';
 import 'package:trial/widgets/appbar_cart_badget.dart';
@@ -14,6 +16,12 @@ class ItemsDetailsScreen extends StatefulWidget {
 
 class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
   int counterLimit = 1;
+  /*  @override
+  void didChangeDependencies() {
+    Provider.of<CartItemCounter>(context).showCartListItemsNumber();
+    super.didChangeDependencies();
+  } */
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

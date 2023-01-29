@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trial/assistant_method/cart_item_counter.dart';
 
 class AppBarWithCartBadge extends StatefulWidget with PreferredSizeWidget {
   AppBarWithCartBadge({this.preferredSizedWidget, this.sellerUID});
@@ -50,16 +52,22 @@ class _AppBarWithCartBadgeState extends State<AppBarWithCartBadge> {
             ),
             Positioned(
                 child: Stack(
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   Icons.brightness_1,
                   size: 20,
                   color: Colors.deepPurpleAccent,
                 ),
                 Positioned(
-                  child: Text("0"),
                   top: 3,
                   right: 4,
+                  child:
+                      Consumer<CartItemCounter>(builder: (context, counter, c) {
+                    return Text(
+                      counter.count.toString(),
+                      style: const TextStyle(color: Colors.white),
+                    );
+                  }),
                 )
               ],
             ))
