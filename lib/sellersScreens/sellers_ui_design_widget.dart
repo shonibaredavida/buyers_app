@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating_nsafe/smooth_star_rating.dart';
 import 'package:trial/brand_screens.drt/brands_screen.dart';
+import 'package:trial/global/global.dart';
 import 'package:trial/models/sellers.dart';
 
 class SellersUiDesignWidget extends StatefulWidget {
@@ -12,6 +13,12 @@ class SellersUiDesignWidget extends StatefulWidget {
 }
 
 class _SellersUiDesignWidgetState extends State<SellersUiDesignWidget> {
+  @override
+  void initState() {
+    super.initState();
+    cartMethods.clearCart(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
