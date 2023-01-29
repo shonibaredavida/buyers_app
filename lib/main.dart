@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trial/assistant_method/cart_item_counter.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/splashScreen/my_splash_screen.dart';
 
@@ -16,12 +18,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'iShop Users App',
-        theme: ThemeData(
-          primarySwatch: Colors.purple,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (c) => CartItemCounter(),
         ),
-        home: const MySplashScreen());
+      ],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'iShop Users App',
+          theme: ThemeData(
+            primarySwatch: Colors.purple,
+          ),
+          home: const MySplashScreen()),
+    );
   }
 }
