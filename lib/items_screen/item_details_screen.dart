@@ -65,7 +65,7 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
                         count: counterLimit,
                         didChangeCount: (value) {
                           if (value < 1) {
-                            if (dev) print(" WE WE WE WE brands exist object");
+                            if (dev) print(" WE WE WE  brands exist object");
                             Fluttertoast.showToast(
                                 msg: "Item cannot be lesser than 1 ");
                             return;
