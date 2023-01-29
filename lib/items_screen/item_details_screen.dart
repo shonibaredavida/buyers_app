@@ -1,10 +1,11 @@
 import 'package:cart_stepper/cart_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:trial/assistant_method/add_item_to_cart.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/items_models.dart';
 import 'package:trial/widgets/appbar_cart_badget.dart';
+
+import '../assistant_method/assistant_methods.dart';
 
 class ItemsDetailsScreen extends StatefulWidget {
   ItemsDetailsScreen({this.model});
@@ -15,7 +16,6 @@ class ItemsDetailsScreen extends StatefulWidget {
 
 class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
   int counterLimit = 1;
-  CartMethods cartMethods = CartMethods();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

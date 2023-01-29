@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trial/assistant_method/assistant_methods.dart';
 
 SharedPreferences? sharedPreferences;
 
+CartMethods cartMethods = CartMethods();
 final itemsImagesList = [
   "slider/0.jpg",
   "slider/1.jpg",
