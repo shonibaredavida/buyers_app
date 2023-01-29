@@ -4,9 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/items_models.dart';
 import 'package:trial/widgets/appbar_cart_badget.dart';
-import 'package:trial/widgets/appbar_cart_badget.dart';
-
-import '../assistant_method/assistant_methods.dart';
 
 class ItemsDetailsScreen extends StatefulWidget {
   ItemsDetailsScreen({this.model});
@@ -20,8 +17,6 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBarWithCartBadge(sellerUID: widget.model!.sellerUID),
       backgroundColor: Colors.black,
       appBar: AppBarWithCartBadge(sellerUID: widget.model!.sellerUID),
       floatingActionButton: FloatingActionButton.extended(
@@ -60,52 +55,27 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
             //added to cart
 
             Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CartStepperInt(
-                  size: 50,
-                  deActiveBackgroundColor: Colors.red,
-                  activeBackgroundColor: Colors.pinkAccent,
-                  activeForegroundColor: Colors.white,
-                  count: counterLimit,
-                  didChangeCount: (value) {
-                    if (value < 1) {
-                      if (dev) print(" WE WE WE WE brands exist object");
-                      Fluttertoast.showToast(msg: "dfbbdfjb");
-                      return;
-                    }
+                child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CartStepperInt(
+                        size: 50,
+                        deActiveBackgroundColor: Colors.red,
+                        activeBackgroundColor: Colors.pinkAccent,
+                        activeForegroundColor: Colors.white,
+                        count: counterLimit,
+                        didChangeCount: (value) {
+                          if (value < 1) {
+                            if (dev) print(" WE WE WE WE brands exist object");
+                            Fluttertoast.showToast(
+                                msg: "Item cannot be lesser than 1 ");
+                            return;
+                          }
+                          setState(() {
+                            counterLimit = value;
+                          });
+                        }))),
             //implement specific number to be
             //added to cart
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CartStepperInt(
-                size: 50,
-                deActiveBackgroundColor: Colors.red,
-                activeBackgroundColor: Colors.pinkAccent,
-                activeForegroundColor: Colors.white,
-                count: counterLimit,
-                didChangeCount: (value) {
-                  if (value < 1) {
-                    if (dev) print(" WE WE WE WE brands exist object");
-                    Fluttertoast.showToast(msg: "dfbbdfjb");
-                    return;
-                  }
-
-                    setState(() {
-                      counterLimit = value;
-                    });
-                  },
-                ),
-              ),
-            ),
-
-                  setState(() {
-                    counterLimit = value;
-                  });
-                },
-              ),
-            ),
 
             sizedBox(),
 
@@ -130,9 +100,6 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
                     color: Colors.grey,
                     fontWeight: FontWeight.normal,
                     fontSize: 15),
-                    color: Colors.grey,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 15),
               ),
             ),
             Padding(
@@ -153,7 +120,6 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
                 ),
               ),
             ),
-            sizedBox(height: 10),
             sizedBox(height: 10),
           ]),
         ),
