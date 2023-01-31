@@ -16,11 +16,11 @@ class ItemsDetailsScreen extends StatefulWidget {
 
 class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
   int counterLimit = 1;
-  /*  @override
+  @override
   void didChangeDependencies() {
     Provider.of<CartItemCounter>(context).showCartListItemsNumber();
     super.didChangeDependencies();
-  } */
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,22 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
           int itemCounter = counterLimit;
           //add to cart increase the number per click
           //check if item is in cart
+          List<String> itemIDsList =
+              cartMethods.separateItemIDsFromUserCartList();
+          if (itemIDsList.contains(widget.model!.itemID)) {
+            if (dev) print("WE WE WE WE already in list");
 
-          //if not add to cart
-          cartMethods.addItemToCart(
-              itemID: widget.model!.itemID.toString(),
-              itemCounter: itemCounter,
-              context: context);
+            Fluttertoast.showToast(msg: "Item already in the Cart");
+          } else {
+            //if not add to cart
+            if (dev) print("WE WE WE WE Not in list");
 
-          if (dev) print(" WE WE WE WE adding Item to cart");
+            cartMethods.addItemToCart(
+                itemID: widget.model!.itemID.toString(),
+                itemCounter: itemCounter,
+                context: context);
+            if (dev) print(" WE WE WE WE adding Item to cart");
+          }
         },
         label: const Text("Add to Cart"),
         icon: const Icon(
