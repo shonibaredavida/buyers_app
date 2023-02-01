@@ -28,6 +28,7 @@ class _CartItemDesignState extends State<CartItemDesign> {
               widget.model!.thumbnailUrl.toString(),
               width: 140,
               height: 120,
+              fit: BoxFit.contain,
             ),
             sizedBox(
               width: 4,
