@@ -70,7 +70,7 @@ class CartMethods {
 
   separateItemQtyFromUserCartList() {
     List<String>? userCartList = sharedPreferences!.getStringList("userCart");
-    List<String>? itemQtyList = []; //cart will be [123443:4,2323443:1,12345:43]
+    List<int>? itemQtyList = []; //cart will be [123443:4,2323443:1,12345:43]
     if (dev) print(userCartList);
     for (int i = 1; i < userCartList!.length; i++) {
       String item = userCartList[i]
@@ -82,8 +82,9 @@ class CartMethods {
 
       //another way
       var lastCaracterPositionOfItemBeforeColon = item.lastIndexOf(":");
-      String getItemQtyOnly =
-          item.substring(lastCaracterPositionOfItemBeforeColon + 1);
+      int getItemQtyOnly =
+          int.parse(item.substring(lastCaracterPositionOfItemBeforeColon + 1));
+
       itemQtyList.add(getItemQtyOnly);
       if (dev) print("$itemQtyList ...... $i");
     }
