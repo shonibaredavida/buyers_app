@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trial/assistant_method/cart_item_counter.dart';
+import 'package:trial/cart_screens/cart_screen.dart';
 
 class AppBarWithCartBadge extends StatefulWidget with PreferredSizeWidget {
   AppBarWithCartBadge({this.preferredSizedWidget, this.sellerUID});
@@ -44,7 +45,14 @@ class _AppBarWithCartBadgeState extends State<AppBarWithCartBadge> {
         Stack(
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        CartScreen(sellerUID: widget.sellerUID),
+                  ),
+                );
+              },
               icon: const Icon(
                 Icons.shopping_cart,
                 color: Colors.white,
