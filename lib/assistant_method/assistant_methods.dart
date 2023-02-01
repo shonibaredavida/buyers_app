@@ -27,7 +27,6 @@ class CartMethods {
     //adding the new item to local device
     sharedPreferences!.setStringList("userCart", tempList);
     if (dev) print("WE WE WE WE stored locally");
-
   }
 
   clearCart(BuildContext context) {
@@ -77,15 +76,15 @@ class CartMethods {
       String item = userCartList[i]
           .toString(); //this will get items in the cart as 122334:4
 
-     // var getItemQtyonly = item.split(':')[ 1];
-    // //this will split the items n select everything b4 ":" i.e 122334
-     // itemQtyList.add(getItemQtyonly);
-       
+      // var getItemQtyonly = item.split(':')[ 1];
+      // //this will split the items n select everything b4 ":" i.e 122334
+      // itemQtyList.add(getItemQtyonly);
+
       //another way
-        var lastCaracterPositionOfItemBeforeColon = item.lastIndexOf(":");
+      var lastCaracterPositionOfItemBeforeColon = item.lastIndexOf(":");
       String getItemQtyOnly =
-          item.substring(lastCaracterPositionOfItemBeforeColon+1);
-      itemQtyList.add(getItemQtyOnly); 
+          item.substring(lastCaracterPositionOfItemBeforeColon + 1);
+      itemQtyList.add(getItemQtyOnly);
       if (dev) print("$itemQtyList ...... $i");
     }
 

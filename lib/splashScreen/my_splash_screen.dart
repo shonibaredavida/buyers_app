@@ -15,7 +15,7 @@ class MySplashScreen extends StatefulWidget {
 class _MySplashScreenState extends State<MySplashScreen> {
   splashScreenTimer() {
     Timer(
-      const Duration(seconds: 3),
+      const Duration(seconds: 2),
       (() async {
         if (FirebaseAuth.instance.currentUser != null) {
           // the user is already logged in
