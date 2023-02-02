@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trial/assistant_method/cart_item_counter.dart';
+import 'package:trial/assistant_method/total_amount.dart';
 import 'package:trial/cart_screens/cart_item_design.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/items_models.dart';
@@ -19,9 +22,13 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     // TODO: implement initState
     ItemQty = cartMethods.separateItemQtyFromUserCartList();
+    totalPrice = 0;
+    Provider.of<Totalamount>(context, listen: false)
+        .showTotalamountOfCartItems(0);
     super.initState();
   }
 
+  double totalPrice = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,16 +64,26 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: CustomScrollView(
         slivers: <Widget>[
-          const SliverToBoxAdapter(
-            child: Center(
-              child: Text(
-                "TOTal Price : {}",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+          SliverToBoxAdapter(child: Consumer2<Totalamount, CartItemCounter>(
+                  builder: (context, totalAmount, cartProvider, c) {
+            return Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Center(
+                child: cartProvider.count == 0
+                    ? Container()
+                    : Text(
+                        "Total Price : N ${totalAmount.tamount.toString()}",
+                        style: const TextStyle(
+                            fontSize: 22,
+                            color: Colors.white,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.bold),
+                      ),
               ),
-            ),
-          ),
+            );
+          })
+              /*   */
+              ),
 
           // in display information from firebase
           // we required the following model , design and a query
@@ -83,6 +100,23 @@ class _CartScreenState extends State<CartScreen> {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     Items model = Items.fromJson(snapshot.data.docs[index]
                         .data() as Map<String, dynamic>);
+
+                    if (index == 0) {
+                      totalPrice = 0;
+                      totalPrice = totalPrice +
+                          (double.parse(model.price.toString()) *
+                              ItemQty![index]);
+                    } else {
+                      totalPrice = totalPrice +
+                          (double.parse(model.price.toString()) *
+                              ItemQty![index]);
+                    }
+                    if (snapshot.data.docs.length - 1 == index) {
+                      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                        Provider.of<Totalamount>(context, listen: false)
+                            .showTotalamountOfCartItems(totalPrice);
+                      });
+                    }
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CartItemDesign(
