@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trial/address_screens/text_field_address_widget.dart';
 
 class SaveNewAddressScreen extends StatefulWidget {
   SaveNewAddressScreen(
@@ -10,6 +11,14 @@ class SaveNewAddressScreen extends StatefulWidget {
 }
 
 class _SaveNewAddressScreenState extends State<SaveNewAddressScreen> {
+  TextEditingController name = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
+  TextEditingController flatHouseNUmber = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController stateCountry = TextEditingController();
+  TextEditingController streetNumber = TextEditingController();
+  String completeAccess = "";
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +59,55 @@ class _SaveNewAddressScreenState extends State<SaveNewAddressScreen> {
         icon: const Icon(
           Icons.save,
           color: Colors.white,
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(18.0),
+              child: Center(
+                child: Text(
+                  "Save New Address",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    TextFieldAddressWidget(
+                      controller: name,
+                      hint: "Name",
+                    ),
+                    TextFieldAddressWidget(
+                      controller: phoneNumber,
+                      hint: "Phone Number",
+                    ),
+                    TextFieldAddressWidget(
+                      controller: streetNumber,
+                      hint: "Street Number",
+                    ),
+                    TextFieldAddressWidget(
+                      controller: flatHouseNUmber,
+                      hint: "flat/ house number",
+                    ),
+                    TextFieldAddressWidget(
+                      controller: city,
+                      hint: "City ",
+                    ),
+                    TextFieldAddressWidget(
+                      controller: stateCountry,
+                      hint: "State / Country",
+                    ),
+                  ],
+                ))
+          ],
         ),
       ),
     );

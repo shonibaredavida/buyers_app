@@ -38,14 +38,14 @@ class _AddressScreenState extends State<AddressScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute(
             builder: (c) => SaveNewAddressScreen(
               sellerUID: widget.sellerUID.toString(),
               totalAmount: widget.totalAmount.toDouble(),
             ),
-          );
+          ));
         },
-        label: const Text("add new address"),
+        label: const Text("Add New Address"),
         icon: const Icon(
           Icons.add_location,
           color: Colors.white,
