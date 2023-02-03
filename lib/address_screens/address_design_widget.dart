@@ -27,7 +27,7 @@ class _AddressDesignWidgetState extends State<AddressDesignWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.black54,
+      color: Colors.white54,
       child: Column(
         children: [
           //address information
@@ -48,7 +48,7 @@ class _AddressDesignWidgetState extends State<AddressDesignWidget> {
                 child: Column(
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
+                      width: MediaQuery.of(context).size.width * 0.7,
                       child: Table(
                         children: [
                           TableRow(
@@ -108,12 +108,15 @@ class _AddressDesignWidgetState extends State<AddressDesignWidget> {
           //button
           widget.value ==
                   Provider.of<AddressChanger>(context, listen: false).count
-              ? ElevatedButton(
-                  onPressed: () {
-                    //send user to place order screen
-                  },
-                  style: ElevatedButton.styleFrom(primary: Colors.pink),
-                  child: const Text("Proceed"),
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      //send user to place order screen
+                    },
+                    style: ElevatedButton.styleFrom(primary: Colors.pink),
+                    child: const Text("Proceed"),
+                  ),
                 )
               : Container()
         ],

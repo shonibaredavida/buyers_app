@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trial/address_screens/address_design_widget.dart';
 import 'package:trial/address_screens/save_new_address_screen.dart';
+import 'package:trial/assistant_method/address_changer.dart';
 import 'package:trial/global/global.dart';
+import 'package:trial/models/address_model.dart';
 
 class AddressScreen extends StatefulWidget {
   AddressScreen({super.key, this.sellerUID, required this.totalAmount});
@@ -14,6 +19,7 @@ class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text(
           "iShop",
@@ -53,6 +59,45 @@ class _AddressScreenState extends State<AddressScreen> {
           Icons.add_location,
           color: Colors.white,
         ),
+      ),
+      body: Column(
+        children: [
+          Consumer<AddressChanger>(builder: (context, address, c) {
+            return Flexible(
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(sharedPreferences!.getString("uid"))
+                    .collection("userAddress")
+                    .snapshots(),
+                builder: ((context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data.docs.length > 0) {
+                      return ListView.builder(
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return AddressDesignWidget(
+                            index: address.count,
+                            model: Address.fromJson(snapshot.data.docs[index]
+                                .data() as Map<String, dynamic>),
+                            sellerID: widget.sellerUID,
+                            totalAmount: widget.totalAmount.toString(),
+                            addressID: snapshot.data.docs[index].id,
+                            value: index,
+                          );
+                        },
+                      );
+                    } else {
+                      return Container();
+                    }
+                  } else {
+                    return Center(child: Text("No Address Added"));
+                  }
+                }),
+              ),
+            );
+          }),
+        ],
       ),
     );
   }
