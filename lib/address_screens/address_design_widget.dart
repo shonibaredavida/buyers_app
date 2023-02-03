@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trial/assistant_method/address_changer.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/address_model.dart';
+import 'package:trial/place_order_screens/place_order_screen.dart';
 
 class AddressDesignWidget extends StatefulWidget {
   AddressDesignWidget({
@@ -113,8 +114,14 @@ class _AddressDesignWidgetState extends State<AddressDesignWidget> {
                   child: ElevatedButton(
                     onPressed: () {
                       //send user to place order screen
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PlaceOrderScreen(
+                              totalAmount: widget.totalAmount,
+                              sellerUID: widget.sellerID,
+                              addressID: widget.addressID)));
                     },
-                    style: ElevatedButton.styleFrom(primary: Colors.pink),
+                    style:
+                        ElevatedButton.styleFrom(primary: Colors.purpleAccent),
                     child: const Text("Proceed"),
                   ),
                 )
