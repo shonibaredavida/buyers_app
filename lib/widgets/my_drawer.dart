@@ -3,6 +3,8 @@ import "package:flutter/material.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trial/authScreens/login_tab_page.dart';
 import 'package:trial/global/global.dart';
+import 'package:trial/orders_screen/orders_screen.dart';
+import 'package:trial/sellersScreens/home_screen.dart';
 import 'package:trial/splashScreen/my_splash_screen.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -36,7 +38,7 @@ class _MyDrawerState extends State<MyDrawer> {
                         NetworkImage(sharedPreferences!.getString("photoUrl")!),
                   ),
                 ),
-                SizedBox(height: 12),
+                sizedBox(height: 12),
                 Text(
                   sharedPreferences!.getString("name")!,
                   style: const TextStyle(
@@ -44,7 +46,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 12)
+                sizedBox(height: 12)
               ],
             ),
           ), //body
@@ -52,29 +54,35 @@ class _MyDrawerState extends State<MyDrawer> {
             padding: const EdgeInsets.only(top: 1),
             child: Column(
               children: [
-                Divider(height: 10, thickness: 2, color: Colors.grey),
+                const Divider(height: 10, thickness: 2, color: Colors.grey),
 
                 //Home
                 ListTile(
-                    leading: Icon(Icons.home, color: Colors.grey),
-                    title: Text("Home",
+                    leading: const Icon(Icons.home, color: Colors.grey),
+                    title: const Text("Home",
                         style: TextStyle(
                           color: Colors.grey,
                         )),
-                    onTap: null),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
+                    }),
 
                 //My Orders
-                Divider(height: 10, thickness: 2, color: Colors.grey),
+                const Divider(height: 10, thickness: 2, color: Colors.grey),
                 ListTile(
-                    leading: Icon(Icons.reorder, color: Colors.grey),
-                    title: Text("My Orders",
+                    leading: const Icon(Icons.reorder, color: Colors.grey),
+                    title: const Text("My Orders",
                         style: TextStyle(
                           color: Colors.grey,
                         )),
-                    onTap: null),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const OrdersScreen()));
+                    }),
                 //Not Yet Received
-                Divider(height: 10, thickness: 2, color: Colors.grey),
-                ListTile(
+                const Divider(height: 10, thickness: 2, color: Colors.grey),
+                const ListTile(
                     leading: Icon(Icons.picture_in_picture_alt_rounded,
                         color: Colors.grey),
                     title: Text("Not Yet Received",
@@ -84,8 +92,8 @@ class _MyDrawerState extends State<MyDrawer> {
                     onTap: null),
 
                 //History
-                Divider(height: 10, thickness: 2, color: Colors.grey),
-                ListTile(
+                const Divider(height: 10, thickness: 2, color: Colors.grey),
+                const ListTile(
                     leading: Icon(Icons.access_time, color: Colors.grey),
                     title: Text("History",
                         style: TextStyle(
