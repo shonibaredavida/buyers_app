@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trial/address_screens/address_screen.dart';
 import 'package:trial/assistant_method/cart_item_counter.dart';
 import 'package:trial/assistant_method/total_amount.dart';
 import 'package:trial/cart_screens/cart_item_design.dart';
@@ -22,13 +23,13 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     // TODO: implement initState
     ItemQty = cartMethods.separateItemQtyFromUserCartList();
-    totalPrice = 0;
+    totalAmount = 0;
     Provider.of<Totalamount>(context, listen: false)
         .showTotalamountOfCartItems(0);
     super.initState();
   }
 
-  double totalPrice = 0.0;
+  double totalAmount = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +53,16 @@ class _CartScreenState extends State<CartScreen> {
             icon: const Icon(Icons.clear_all),
           ),
           FloatingActionButton.extended(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (c) => AddressScreen(
+                    sellerUID: widget.sellerUID.toString(),
+                    totalAmount: totalAmount.toDouble(),
+                  ),
+                ),
+              );
+            },
             heroTag: "btn2",
             label: const Text(
               "Check Out",
@@ -102,19 +112,19 @@ class _CartScreenState extends State<CartScreen> {
                         .data() as Map<String, dynamic>);
 
                     if (index == 0) {
-                      totalPrice = 0;
-                      totalPrice = totalPrice +
+                      totalAmount = 0;
+                      totalAmount = totalAmount +
                           (double.parse(model.price.toString()) *
                               ItemQty![index]);
                     } else {
-                      totalPrice = totalPrice +
+                      totalAmount = totalAmount +
                           (double.parse(model.price.toString()) *
                               ItemQty![index]);
                     }
                     if (snapshot.data.docs.length - 1 == index) {
                       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                         Provider.of<Totalamount>(context, listen: false)
-                            .showTotalamountOfCartItems(totalPrice);
+                            .showTotalamountOfCartItems(totalAmount);
                       });
                     }
                     return Padding(
@@ -130,7 +140,7 @@ class _CartScreenState extends State<CartScreen> {
                 return const SliverToBoxAdapter(
                   child: Center(
                     child: Text(
-                      "NO Item selected",
+                      "No Item selected",
                     ),
                   ),
                 );
