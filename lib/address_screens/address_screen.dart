@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trial/address_screens/save_new_address_screen.dart';
+import 'package:trial/global/global.dart';
 
 class AddressScreen extends StatefulWidget {
   AddressScreen({super.key, this.sellerUID, required this.totalAmount});
@@ -38,6 +39,8 @@ class _AddressScreenState extends State<AddressScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          dev ? print("WE WE WE navigation to savedNewaddressScreen ") : null;
+
           Navigator.of(context).push(MaterialPageRoute(
             builder: (c) => SaveNewAddressScreen(
               sellerUID: widget.sellerUID.toString(),

@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trial/address_screens/text_field_address_widget.dart';
+import 'package:trial/global/global.dart';
 
 class SaveNewAddressScreen extends StatefulWidget {
   SaveNewAddressScreen(
@@ -13,11 +16,11 @@ class SaveNewAddressScreen extends StatefulWidget {
 class _SaveNewAddressScreenState extends State<SaveNewAddressScreen> {
   TextEditingController name = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
-  TextEditingController flatHouseNUmber = TextEditingController();
+  TextEditingController flatHouseNumber = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController stateCountry = TextEditingController();
   TextEditingController streetNumber = TextEditingController();
-  String completeAccess = "";
+  String completeAddress = "";
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -48,12 +51,29 @@ class _SaveNewAddressScreenState extends State<SaveNewAddressScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          MaterialPageRoute(
-            builder: (c) => SaveNewAddressScreen(
-              sellerUID: widget.sellerUID.toString(),
-              totalAmount: widget.totalAmount.toDouble(),
-            ),
-          );
+          if (formKey.currentState!.validate()) {
+            completeAddress =
+                "${streetNumber.text.trim()}, ${flatHouseNumber.text.trim()}, ${city.text.trim()}, ${stateCountry.text.trim()} ";
+
+            dev ? print("WE WE WE saving address to firestore") : null;
+            FirebaseFirestore.instance
+                .collection("users")
+                .doc(sharedPreferences!.getString("uid"))
+                .collection("userAddress")
+                .doc(DateTime.now().millisecondsSinceEpoch.toString())
+                .set({
+              "name": name.text.trim(),
+              "phoneNumber": phoneNumber.text.trim(),
+              "flatHouseNumber": flatHouseNumber.text.trim(),
+              "city": city.text.trim(),
+              "streetNumber": streetNumber.text.trim(),
+              "stateCountry": stateCountry.text.trim(),
+              "completeAddress": completeAddress,
+            }).then((value) {
+              Fluttertoast.showToast(msg: "New Shipment Address Saved");
+              formKey.currentState!.reset();
+            });
+          }
         },
         label: const Text("Save Address"),
         icon: const Icon(
@@ -94,7 +114,7 @@ class _SaveNewAddressScreenState extends State<SaveNewAddressScreen> {
                       hint: "Street Number",
                     ),
                     TextFieldAddressWidget(
-                      controller: flatHouseNUmber,
+                      controller: flatHouseNumber,
                       hint: "flat/ house number",
                     ),
                     TextFieldAddressWidget(
