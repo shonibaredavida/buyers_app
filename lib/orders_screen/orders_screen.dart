@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:trial/global/global.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -35,7 +37,27 @@ class _OrdersScreenState extends State<OrdersScreen> {
           ),
         ),
       ),
-      body: null,
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection("users")
+            .doc(sharedPreferences!.getString("uid"))
+            .collection("orders")
+            .where("status", isEqualTo: "normal")
+            .orderBy(("orderTime"), descending: true)
+            .snapshots(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return Container();
+          } else {
+            return Center(
+              child: Text(
+                "No Order has been placed",
+                style: TextStyle(fontSize: 18),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }
