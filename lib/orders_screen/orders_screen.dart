@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:trial/assistant_method/cart_methods.dart';
 import 'package:trial/global/global.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -47,7 +48,27 @@ class _OrdersScreenState extends State<OrdersScreen> {
             .snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return Container();
+            return ListView.builder(
+              itemCount: snapshot.data.docs.lenght,
+              itemBuilder: (BuildContext context, int index) {
+                return FutureBuilder(
+                    future: FirebaseFirestore.instance
+                        .collection("items")
+                        .where('itemID',
+                            whereIn: cartMethods.separateOrderItemIDs({
+                              snapshot.data.docs[index].data()
+                                  as Map<String, dynamic>
+                            })["productIDs"])
+                        .where("orderBy",
+                            whereIn: (snapshot.data.docs[index].data()
+                                as Map<String, dynamic>)["uid"])
+                        .orderBy("publishedDate", descending: true)
+                        .get(),
+                    builder: (context, ItemSnapshot) {
+                      return Container();
+                    });
+              },
+            );
           } else {
             return Center(
               child: Text(

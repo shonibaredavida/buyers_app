@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trial/assistant_method/assistant_methods.dart';
+import 'package:trial/assistant_method/cart_methods.dart';
 
 SharedPreferences? sharedPreferences;
 
