@@ -115,9 +115,10 @@ class CartMethods {
   }
 
   separateOrderItemQty(productsIDs) {
+    if (dev) print("userCartList = $productsIDs");
     List<String>? userCartList = List<String>.from(productsIDs);
-    List<int>? itemQtyList = []; //cart will be [123443:4,2323443:1,12345:43]
-    if (dev) print(userCartList);
+    List<String>? itemQtyList = []; //cart will be [123443:4,2323443:1,12345:43]
+    //if (dev) print(userCartList);
     for (int i = 1; i < userCartList.length; i++) {
       String item = userCartList[i]
           .toString(); //this will get items in the cart as 122334:4
@@ -128,8 +129,8 @@ class CartMethods {
 
       //another way
       var lastCaracterPositionOfItemBeforeColon = item.lastIndexOf(":");
-      int getItemQtyOnly =
-          int.parse(item.substring(lastCaracterPositionOfItemBeforeColon + 1));
+      String getItemQtyOnly =
+          item.substring(lastCaracterPositionOfItemBeforeColon + 1).toString();
 
       itemQtyList.add(getItemQtyOnly);
       if (dev) print("$itemQtyList ...... $i");
