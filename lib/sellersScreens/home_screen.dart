@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:trial/assistant_method/assistant_methods.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/sellers.dart';
 import 'package:trial/sellersScreens/sellers_ui_design_widget.dart';

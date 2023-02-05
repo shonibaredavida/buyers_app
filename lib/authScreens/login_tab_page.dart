@@ -48,6 +48,7 @@ class _LoginTabPageState extends State<LoginTabPage> {
         .catchError((errorMessage) {
       Fluttertoast.showToast(msg: "Error occured \n $errorMessage");
       Navigator.of(context).pop();
+      //  return null;
     });
     if (currentUser != null) {
       checkIfUserRecordExist(currentUser);
