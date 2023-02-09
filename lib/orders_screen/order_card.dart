@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/items_models.dart';
+import 'package:trial/orders_screen/order_details_screen.dart';
 
 class OrderCart extends StatefulWidget {
   OrderCart(
@@ -21,23 +22,31 @@ class OrderCart extends StatefulWidget {
 class _OrderCartState extends State<OrderCart> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.black,
-      elevation: 10,
-      shadowColor: Colors.white38,
-      child: Container(
-        color: Colors.transparent,
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.all(10),
-        height: widget.itemCounts! * 125,
-        child: ListView.builder(
-            itemCount: widget.itemCounts,
-            itemBuilder: (context, index) {
-              Items model = Items.fromJson(
-                  widget.data![index].data() as Map<String, dynamic>);
-              return placedOrderItemsDesignWidget(
-                  model, context, widget.separateQuantityList[index]);
-            }),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => OrderDetailsScreen(
+                  orderID: widget.orderId,
+                )));
+      },
+      child: Card(
+        color: Colors.black,
+        elevation: 10,
+        shadowColor: Colors.white38,
+        child: Container(
+          color: Colors.transparent,
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.all(10),
+          height: widget.itemCounts! * 125,
+          child: ListView.builder(
+              itemCount: widget.itemCounts,
+              itemBuilder: (context, index) {
+                Items model = Items.fromJson(
+                    widget.data![index].data() as Map<String, dynamic>);
+                return placedOrderItemsDesignWidget(
+                    model, context, widget.separateQuantityList[index]);
+              }),
+        ),
       ),
     );
   }
@@ -91,7 +100,7 @@ Widget placedOrderItemsDesignWidget(
                       style: const TextStyle(
                           color: Colors.purpleAccent,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                          fontSize: 18),
                     ),
                   ],
                 ),
@@ -101,14 +110,14 @@ Widget placedOrderItemsDesignWidget(
                     const Text(
                       "x",
                       style: TextStyle(
-                        color: Colors.purpleAccent,
+                        color: Colors.grey,
                         fontSize: 16,
                       ),
                     ),
                     Text(
                       itemQty,
                       style: const TextStyle(
-                          color: Colors.purpleAccent,
+                          color: Colors.grey,
                           fontWeight: FontWeight.bold,
                           fontSize: 28),
                     ),
