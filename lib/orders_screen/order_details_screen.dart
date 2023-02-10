@@ -69,6 +69,19 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         ),
                       ),
                     ),
+                    const Divider(
+                      thickness: 2,
+                      color: Colors.red,
+                    ),
+                    Container(
+                      child: orderDataStatus == "ended"
+                          ? Image.asset("images/delivered.png")
+                          : Image.asset("images/state.png"),
+                    ),
+                    const Divider(
+                      thickness: 2,
+                      color: Colors.red,
+                    ),
                   ],
                 );
               } else {
