@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/orders_screen/status_banner_widget.dart';
 
@@ -34,6 +35,39 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     StatusBanner(
                       orderStatus: orderDataStatus,
                       status: orderDataMap['isSucess'],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        "N ${orderDataMap['totalAmount'].toString()}",
+                        style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        "Oder ID: ${orderDataMap['orderId'].toString()}",
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        "Order at  ${DateFormat("dd MMMM,yyyy - hh:mm aa").format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                              int.parse(orderDataMap['orderTime'])),
+                        )}",
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ],
                 );
