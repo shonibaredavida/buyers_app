@@ -7,8 +7,8 @@ import 'package:trial/orders_screen/address_design_widget.dart';
 import 'package:trial/orders_screen/status_banner_widget.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
-  String? orderID;
-  OrderDetailsScreen({this.orderID});
+  final String? orderID;
+  const OrderDetailsScreen({super.key, this.orderID});
   @override
   State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
 }
@@ -97,12 +97,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           return AddressDesign(
                               model: Address.fromJson(addressSnapshot.data
                                   .data() as Map<String, dynamic>),
-                              //   sellerId: orderDataMap['sellerUID'],
+                              sellerId: orderDataMap['sellerUID'],
                               orderId: widget.orderID,
                               orderStatus: orderDataStatus,
                               orderedByUser: orderDataMap['orderBy']);
                         } else {
-                          return Text("");
+                          return const Text("No Data Found");
                         }
                       },
                     ),
