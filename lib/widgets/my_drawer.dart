@@ -77,7 +77,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           color: Colors.grey,
                         )),
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => const OrdersScreen()));
                     }),
                 //Not Yet Received

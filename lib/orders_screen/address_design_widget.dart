@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/address_model.dart';
+import 'package:trial/splashScreen/my_splash_screen.dart';
 
 class AddressDesign extends StatelessWidget {
-  Address? model;
-  String? orderStatus;
-  String? orderId;
-  String? sellerId;
-  String? orderedByUser;
-  AddressDesign(
-      {this.model,
+  final Address? model;
+  final String? orderStatus;
+  final String? orderId;
+  final String? sellerId;
+  final String? orderedByUser;
+  const AddressDesign(
+      {super.key,
+      this.model,
       this.sellerId,
       this.orderId,
       this.orderStatus,
@@ -86,6 +88,56 @@ class AddressDesign extends StatelessWidget {
           ),
         ),
         sizedBox(height: 5),
+        GestureDetector(
+          onTap: () {
+            if (orderStatus == "ended") {
+              //implement reorder the same cart
+            } else if (orderStatus == "shifted") {
+              //implement "Parcel Delivered and Received "
+            } else if (orderStatus == "normal") {
+              Navigator.pop(context);
+            } else {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const MySplashScreen()));
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.pinkAccent,
+                      Colors.purpleAccent,
+                    ],
+                    begin: FractionalOffset(0.0, 0.0),
+                    end: FractionalOffset(1.0, 0.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp,
+                  ),
+                ),
+                width: MediaQuery.of(context).size.width - 40,
+                height: orderStatus == "ended"
+                    ? 60
+                    : MediaQuery.of(context).size.height * 0.08,
+                child: Center(
+                  child: Text(
+                    orderStatus == "ended"
+                        ? "Do you want to Rate the seller?"
+                        : orderStatus == "Shifted"
+                            ? "Parcel Delivered and Received \n Click to Confirm"
+                            : orderStatus == "normal"
+                                ? "Go Back"
+                                : "",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  ),
+                )),
+          ),
+        )
       ],
     );
   }
