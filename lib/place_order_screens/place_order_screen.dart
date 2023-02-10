@@ -28,6 +28,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
       "orderId": orderId,
       "orderTime": orderId,
       "isSucess": true,
+      "sellerUID": widget.sellerUID,
       "status": "normal",
     }).whenComplete(() {
       saveOrderDetailsForSeller({
@@ -36,6 +37,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
         "orderBy": sharedPreferences!.getString("uid"),
         "productIDs": sharedPreferences!.getStringList("userCart"),
         "orderId": orderId,
+        "sellerUID": widget.sellerUID,
         "orderTime": orderId,
         "isSucess": true,
         "status": "normal",

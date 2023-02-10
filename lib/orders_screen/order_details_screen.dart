@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:trial/global/global.dart';
+import 'package:trial/models/address_model.dart';
+import 'package:trial/orders_screen/address_design_widget.dart';
 import 'package:trial/orders_screen/status_banner_widget.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
@@ -39,7 +41,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
-                        "N ${orderDataMap['totalAmount'].toString()}",
+                        "N ${orderDataMap['totalAmount']}",
                         style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 24,
@@ -81,6 +83,28 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     const Divider(
                       thickness: 2,
                       color: Colors.red,
+                    ),
+                    FutureBuilder(
+                      future: FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(sharedPreferences!.getString("uid"))
+                          .collection("userAddress")
+                          .doc(orderDataMap["addressID"])
+                          .get(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot addressSnapshot) {
+                        if (addressSnapshot.hasData) {
+                          return AddressDesign(
+                              model: Address.fromJson(addressSnapshot.data
+                                  .data() as Map<String, dynamic>),
+                              //   sellerId: orderDataMap['sellerUID'],
+                              orderId: widget.orderID,
+                              orderStatus: orderDataStatus,
+                              orderedByUser: orderDataMap['orderBy']);
+                        } else {
+                          return Text("");
+                        }
+                      },
                     ),
                   ],
                 );
