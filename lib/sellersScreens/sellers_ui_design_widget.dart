@@ -5,8 +5,8 @@ import 'package:trial/global/global.dart';
 import 'package:trial/models/sellers.dart';
 
 class SellersUiDesignWidget extends StatefulWidget {
-  Sellers? model;
-  SellersUiDesignWidget({this.model});
+  final Sellers? model;
+  const SellersUiDesignWidget({super.key, this.model});
 
   @override
   State<SellersUiDesignWidget> createState() => _SellersUiDesignWidgetState();
@@ -44,12 +44,12 @@ class _SellersUiDesignWidgetState extends State<SellersUiDesignWidget> {
                   fit: BoxFit.fill,
                 ),
               ),
-              SizedBox(
+              sizedBox(
                 height: 1,
               ),
               Text(
                 widget.model!.name.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.pinkAccent),

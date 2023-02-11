@@ -5,15 +5,16 @@ import 'package:trial/models/items_models.dart';
 import 'package:trial/orders_screen/order_details_screen.dart';
 
 class OrderCart extends StatefulWidget {
-  OrderCart(
-      {this.data,
+  const OrderCart(
+      {super.key,
+      this.data,
       this.itemCounts,
       this.orderId,
       required this.separateQuantityList});
-  int? itemCounts;
-  List<DocumentSnapshot>? data;
-  String? orderId;
-  List<String> separateQuantityList;
+  final int? itemCounts;
+  final List<DocumentSnapshot>? data;
+  final String? orderId;
+  final List<String> separateQuantityList;
 
   @override
   State<OrderCart> createState() => _OrderCartState();
@@ -35,8 +36,8 @@ class _OrderCartState extends State<OrderCart> {
         shadowColor: Colors.white38,
         child: Container(
           color: Colors.transparent,
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           height: widget.itemCounts! * 125,
           child: ListView.builder(
               itemCount: widget.itemCounts,

@@ -8,9 +8,9 @@ import 'package:trial/global/global.dart';
 import 'package:trial/models/address_model.dart';
 
 class AddressScreen extends StatefulWidget {
-  AddressScreen({super.key, this.sellerUID, required this.totalAmount});
-  String? sellerUID;
-  double totalAmount;
+  const AddressScreen({super.key, this.sellerUID, required this.totalAmount});
+  final String? sellerUID;
+  final double totalAmount;
   @override
   State<AddressScreen> createState() => _AddressScreenState();
 }
@@ -45,6 +45,7 @@ class _AddressScreenState extends State<AddressScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          // ignore: avoid_print
           dev ? print("WE WE WE navigation to savedNewaddressScreen ") : null;
 
           Navigator.of(context).push(MaterialPageRoute(
@@ -91,7 +92,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       return Container();
                     }
                   } else {
-                    return Center(child: Text("No Address Added"));
+                    return const Center(child: Text("No Address Added"));
                   }
                 }),
               ),

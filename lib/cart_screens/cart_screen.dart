@@ -11,18 +11,17 @@ import 'package:trial/splashScreen/my_splash_screen.dart';
 import 'package:trial/widgets/appbar_cart_badget.dart';
 
 class CartScreen extends StatefulWidget {
-  CartScreen({super.key, this.sellerUID});
-  String? sellerUID;
+  const CartScreen({super.key, this.sellerUID});
+  final String? sellerUID;
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  List<int>? ItemQty = cartMethods.separateItemQtyFromUserCartList();
+  List<int>? itemQty = cartMethods.separateItemQtyFromUserCartList();
   @override
   void initState() {
-    // TODO: implement initState
-    ItemQty = cartMethods.separateItemQtyFromUserCartList();
+    itemQty = cartMethods.separateItemQtyFromUserCartList();
     totalAmount = 0;
     Provider.of<Totalamount>(context, listen: false)
         .showTotalamountOfCartItems(0);
@@ -34,7 +33,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBarWithCartBadge(),
+      appBar: const AppBarWithCartBadge(),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -115,11 +114,11 @@ class _CartScreenState extends State<CartScreen> {
                       totalAmount = 0;
                       totalAmount = totalAmount +
                           (double.parse(model.price.toString()) *
-                              ItemQty![index]);
+                              itemQty![index]);
                     } else {
                       totalAmount = totalAmount +
                           (double.parse(model.price.toString()) *
-                              ItemQty![index]);
+                              itemQty![index]);
                     }
                     if (snapshot.data.docs.length - 1 == index) {
                       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -131,7 +130,7 @@ class _CartScreenState extends State<CartScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: CartItemDesign(
                         model: model,
-                        qty: ItemQty![index],
+                        qty: itemQty![index],
                       ),
                     );
                   }, childCount: snapshot.data.docs.length),

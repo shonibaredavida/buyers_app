@@ -5,10 +5,10 @@ import 'package:trial/address_screens/text_field_address_widget.dart';
 import 'package:trial/global/global.dart';
 
 class SaveNewAddressScreen extends StatefulWidget {
-  SaveNewAddressScreen(
+  const SaveNewAddressScreen(
       {super.key, required this.sellerUID, required this.totalAmount});
-  String sellerUID;
-  double totalAmount;
+  final String sellerUID;
+  final double totalAmount;
   @override
   State<SaveNewAddressScreen> createState() => _SaveNewAddressScreenState();
 }
@@ -55,7 +55,7 @@ class _SaveNewAddressScreenState extends State<SaveNewAddressScreen> {
             completeAddress =
                 "${streetNumber.text.trim()}, ${flatHouseNumber.text.trim()}, ${city.text.trim()}, ${stateCountry.text.trim()} ";
 
-            dev ? print("WE WE WE saving address to firestore") : null;
+            dev ? printo("saving address to firestore") : null;
             FirebaseFirestore.instance
                 .collection("users")
                 .doc(sharedPreferences!.getString("uid"))

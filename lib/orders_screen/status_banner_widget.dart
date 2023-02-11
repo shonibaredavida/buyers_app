@@ -3,9 +3,9 @@ import 'package:trial/global/global.dart';
 import 'package:trial/sellersScreens/home_screen.dart';
 
 class StatusBanner extends StatelessWidget {
-  bool? status;
-  String? orderStatus;
-  StatusBanner({this.status, this.orderStatus});
+  final bool? status;
+  final String? orderStatus;
+  const StatusBanner({super.key, this.status, this.orderStatus});
 
   @override
   Widget build(BuildContext context) {

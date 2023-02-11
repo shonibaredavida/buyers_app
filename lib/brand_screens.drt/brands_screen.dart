@@ -9,8 +9,8 @@ import 'package:trial/widgets/my_drawer.dart';
 import 'package:trial/widgets/text_delegate_header_widget.dart';
 
 class BrandsScreen extends StatefulWidget {
-  Sellers? model;
-  BrandsScreen({this.model});
+  final Sellers? model;
+  const BrandsScreen({super.key, this.model});
   @override
   State<BrandsScreen> createState() => _BrandsScreenState();
 }
@@ -60,15 +60,14 @@ class _BrandsScreenState extends State<BrandsScreen> {
                 .snapshots(),
             builder: (context, AsyncSnapshot dataSnapShot) {
               if (dataSnapShot.hasData) {
-                if (dev) print("WE WE WE WE brands exist");
+                if (dev) printo("brands exist");
 
 //if there are brands
                 return SliverStaggeredGrid.countBuilder(
                     crossAxisCount: 1,
                     staggeredTileBuilder: (c) => const StaggeredTile.fit(1),
                     itemBuilder: ((context, index) {
-                      if (dev)
-                        print("WE WE WE WE Streaming the exisiting brands ");
+                      if (dev) printo("Streaming the exisiting brands ");
 // this translate the firebase json stream to the model class
 //to return a useable format for the ui design widget
                       Brands brandsModel = Brands.fromJson(
@@ -80,7 +79,7 @@ class _BrandsScreenState extends State<BrandsScreen> {
                     }),
                     itemCount: dataSnapShot.data.docs.length);
               } else {
-                if (dev) print("WE WE WE WE No Brands Added' ");
+                if (dev) printo(" No Brands Added' ");
 
                 //if there are no brands
                 return const SliverToBoxAdapter(

@@ -48,6 +48,7 @@ class _LoginTabPageState extends State<LoginTabPage> {
         .catchError((errorMessage) {
       Fluttertoast.showToast(msg: "Error occured \n $errorMessage");
       Navigator.of(context).pop();
+      return null;
       //  return null;
     });
     if (currentUser != null) {
@@ -74,6 +75,7 @@ class _LoginTabPageState extends State<LoginTabPage> {
           await sharedPreferences!.setStringList("userCart", userCartList);
 
           //send the user to home screen
+          // ignore: use_build_context_synchronously
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const MySplashScreen()));
         } else {
@@ -121,7 +123,7 @@ class _LoginTabPageState extends State<LoginTabPage> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).primaryColor,
+                backgroundColor: Theme.of(context).primaryColor,
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 100),
               ),

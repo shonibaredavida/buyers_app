@@ -6,7 +6,8 @@ import 'package:trial/models/address_model.dart';
 import 'package:trial/place_order_screens/place_order_screen.dart';
 
 class AddressDesignWidget extends StatefulWidget {
-  AddressDesignWidget({
+  const AddressDesignWidget({
+    super.key,
     this.index,
     this.model,
     this.addressID,
@@ -14,12 +15,12 @@ class AddressDesignWidget extends StatefulWidget {
     this.totalAmount,
     this.value,
   });
-  Address? model;
-  int? index;
-  int? value;
-  String? addressID;
-  String? totalAmount;
-  String? sellerID;
+  final Address? model;
+  final int? index;
+  final int? value;
+  final String? addressID;
+  final String? totalAmount;
+  final String? sellerID;
   @override
   State<AddressDesignWidget> createState() => _AddressDesignWidgetState();
 }
@@ -48,7 +49,7 @@ class _AddressDesignWidgetState extends State<AddressDesignWidget> {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Table(
                         children: [
@@ -120,8 +121,8 @@ class _AddressDesignWidgetState extends State<AddressDesignWidget> {
                               sellerUID: widget.sellerID,
                               addressID: widget.addressID)));
                     },
-                    style:
-                        ElevatedButton.styleFrom(primary: Colors.purpleAccent),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.purpleAccent),
                     child: const Text("Proceed"),
                   ),
                 )

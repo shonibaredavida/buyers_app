@@ -3,9 +3,9 @@ import 'package:trial/global/global.dart';
 import 'package:trial/models/items_models.dart';
 
 class CartItemDesign extends StatefulWidget {
-  CartItemDesign({super.key, this.model, this.qty});
-  Items? model;
-  int? qty;
+  const CartItemDesign({super.key, this.model, this.qty});
+  final Items? model;
+  final int? qty;
   @override
   State<CartItemDesign> createState() => _CartItemDesignState();
 }
