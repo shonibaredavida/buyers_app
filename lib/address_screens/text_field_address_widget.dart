@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class TextFieldAddressWidget extends StatelessWidget {
-  TextFieldAddressWidget({this.controller, this.hint});
-  String? hint;
+  TextFieldAddressWidget({super.key, this.controller, this.hint});
+  final String? hint;
   TextEditingController? controller = TextEditingController();
   @override
   Widget build(BuildContext context) {

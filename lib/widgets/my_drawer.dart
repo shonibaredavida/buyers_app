@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trial/authScreens/login_tab_page.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/orders_screen/orders_screen.dart';
 import 'package:trial/sellersScreens/home_screen.dart';
@@ -102,8 +100,8 @@ class _MyDrawerState extends State<MyDrawer> {
                     onTap: null),
 
                 //Search
-                Divider(height: 10, thickness: 2, color: Colors.grey),
-                ListTile(
+                const Divider(height: 10, thickness: 2, color: Colors.grey),
+                const ListTile(
                     leading: Icon(Icons.search, color: Colors.grey),
                     title: Text("Search",
                         style: TextStyle(
@@ -112,10 +110,10 @@ class _MyDrawerState extends State<MyDrawer> {
                     onTap: null),
 
                 //LogOut
-                Divider(height: 10, thickness: 2, color: Colors.grey),
+                const Divider(height: 10, thickness: 2, color: Colors.grey),
                 ListTile(
-                    leading: Icon(Icons.exit_to_app, color: Colors.grey),
-                    title: Text("LogOut",
+                    leading: const Icon(Icons.exit_to_app, color: Colors.grey),
+                    title: const Text("LogOut",
                         style: TextStyle(
                           color: Colors.grey,
                         )),

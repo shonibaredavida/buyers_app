@@ -5,14 +5,15 @@ import 'package:trial/assistant_method/cart_item_counter.dart';
 import 'package:trial/cart_screens/cart_screen.dart';
 
 class AppBarWithCartBadge extends StatefulWidget with PreferredSizeWidget {
-  AppBarWithCartBadge({this.preferredSizedWidget, this.sellerUID});
-  PreferredSizeWidget? preferredSizedWidget;
-  String? sellerUID;
+  const AppBarWithCartBadge(
+      {super.key, this.preferredSizedWidget, this.sellerUID});
+  final PreferredSizeWidget? preferredSizedWidget;
+  final String? sellerUID;
   @override
   State<AppBarWithCartBadge> createState() => _AppBarWithCartBadgeState();
 
   @override
-  // TODO: implement preferredSize
+  //  implement preferredSize
   Size get preferredSize => preferredSizedWidget == null
       ? Size(56, AppBar().preferredSize.height)
       : Size(56, 80 + AppBar().preferredSize.height);

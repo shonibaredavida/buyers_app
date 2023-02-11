@@ -9,10 +9,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/splashScreen/my_splash_screen.dart';
 import 'package:trial/widgets/custom_text_field.dart';
-import 'package:firebase_storage/firebase_storage.dart' as fStorage;
+import 'package:firebase_storage/firebase_storage.dart' as f_storage;
 import 'package:trial/widgets/loading_dialog.dart';
 
 class SignupTaPage extends StatefulWidget {
+  const SignupTaPage({super.key});
+
   @override
   State<SignupTaPage> createState() => _SignupTaPageState();
 }
@@ -52,10 +54,10 @@ class _SignupTaPageState extends State<SignupTaPage> {
     await sharedPreferences!.setString("email", currentUser.email!);
     await sharedPreferences!.setString("name", namecontroller.text.trim());
     await sharedPreferences!.setString("photoUrl", downloadUrlImage);
-    await sharedPreferences!.setStringList("userCart", ["initialValue"]);
+    await sharedPreferences!.setStringList("userCart", ["initialValue"]).then(
+        (value) => Navigator.push(context,
+            MaterialPageRoute(builder: (c) => const MySplashScreen())));
 // route to home page
-    Navigator.push(
-        context, MaterialPageRoute(builder: (c) => MySplashScreen()));
   }
 
   saveInformationToDatabase(email, password) async {
@@ -71,7 +73,7 @@ class _SignupTaPageState extends State<SignupTaPage> {
     });
 
     if (currentUser != null) {
-      if (dev) print("logged in `");
+      if (dev) printo("logged in `");
       //save the user information to Database n save locally
       saveInfoToFireStoreAndLocally(currentUser!);
     }
@@ -80,7 +82,7 @@ class _SignupTaPageState extends State<SignupTaPage> {
   formValidation() async {
     if (imgXFile == null) // no image selected
     {
-      if (dev) print('SELECT pix');
+      if (dev) printo('SELECT pix');
       Fluttertoast.showToast(msg: "Pls Select an Image");
     } else {
       if (emailController.text.isNotEmpty &&
@@ -99,18 +101,18 @@ class _SignupTaPageState extends State<SignupTaPage> {
               });
           //1~ uploading pix and downloading Pix URL,
           String filename = DateTime.now().microsecondsSinceEpoch.toString();
-          fStorage.Reference storageRef = fStorage.FirebaseStorage.instance
+          f_storage.Reference storageRef = f_storage.FirebaseStorage.instance
               .ref()
               .child("usersImage")
               .child(filename);
-          fStorage.UploadTask uploadImageTask =
+          f_storage.UploadTask uploadImageTask =
               storageRef.putFile(File(imgXFile!.path));
-          fStorage.TaskSnapshot taskSnapshot =
+          f_storage.TaskSnapshot taskSnapshot =
               await uploadImageTask.whenComplete(() => null);
           await taskSnapshot.ref.getDownloadURL().then((urlImage) {
             downloadUrlImage = urlImage;
           });
-          if (dev) print("saving to db");
+          if (dev) printo("saving to db");
 
           //2~  Upload user info to firebase
           saveInformationToDatabase(
@@ -174,7 +176,7 @@ class _SignupTaPageState extends State<SignupTaPage> {
               )),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).primaryColor,
               padding:
                   const EdgeInsets.symmetric(vertical: 15, horizontal: 100),
             ),

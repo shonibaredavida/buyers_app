@@ -5,14 +5,15 @@ import 'package:trial/global/global.dart';
 import 'package:trial/sellersScreens/home_screen.dart';
 
 class PlaceOrderScreen extends StatefulWidget {
-  PlaceOrderScreen({
+  const PlaceOrderScreen({
+    super.key,
     this.addressID,
     this.sellerUID,
     this.totalAmount,
   });
-  String? addressID;
-  String? totalAmount;
-  String? sellerUID;
+  final String? addressID;
+  final String? totalAmount;
+  final String? sellerUID;
   @override
   State<PlaceOrderScreen> createState() => _PlaceOrderScreenState();
 }

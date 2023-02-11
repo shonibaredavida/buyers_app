@@ -8,8 +8,8 @@ import 'package:trial/models/items_models.dart';
 import 'package:trial/widgets/appbar_cart_badget.dart';
 
 class ItemsDetailsScreen extends StatefulWidget {
-  ItemsDetailsScreen({this.model});
-  Items? model;
+  const ItemsDetailsScreen({super.key, this.model});
+  final Items? model;
   @override
   State<ItemsDetailsScreen> createState() => _ItemsDetailsScreenState();
 }
@@ -35,18 +35,18 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
           List<String> itemIDsList =
               cartMethods.separateItemIDsFromUserCartList();
           if (itemIDsList.contains(widget.model!.itemID)) {
-            if (dev) print("WE WE WE WE already in list");
+            if (dev) printo("already in list");
 
             Fluttertoast.showToast(msg: "Item already in the Cart");
           } else {
             //if not add to cart
-            if (dev) print("WE WE WE WE Not in list");
+            if (dev) printo(" Not in list");
 
             cartMethods.addItemToCart(
                 itemID: widget.model!.itemID.toString(),
                 itemCounter: itemCounter,
                 context: context);
-            if (dev) print(" WE WE WE WE adding Item to cart");
+            if (dev) printo(" adding Item to cart");
           }
         },
         label: const Text("Add to Cart"),
@@ -81,7 +81,7 @@ class _ItemsDetailsScreenState extends State<ItemsDetailsScreen> {
                         count: counterLimit,
                         didChangeCount: (value) {
                           if (value < 1) {
-                            if (dev) print(" WE WE WE  brands exist object");
+                            if (dev) printo("brands exist object");
                             Fluttertoast.showToast(
                                 msg: "Item cannot be lesser than 1 ");
                             return;

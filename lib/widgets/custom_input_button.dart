@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomInputButton extends StatefulWidget {
-  String title;
-  Color? buttonColor;
-  Color? textColor;
+  final String title;
+  final Color? buttonColor;
+  final Color? textColor;
 
-  CustomInputButton(this.title, this.buttonColor, this.textColor, {Key? key})
+  const CustomInputButton(this.title, this.buttonColor, this.textColor,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -17,7 +18,7 @@ class _CustomInputButtonState extends State<CustomInputButton> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: widget.buttonColor,
+        backgroundColor: widget.buttonColor,
         padding: const EdgeInsets.symmetric(vertical: 15),
       ),
       onPressed: () {},

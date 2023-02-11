@@ -169,7 +169,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   builder: (c, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       if (dev) {
-                        print("WE WE WE displayed the orders accordingly");
+                        printo("displayed the orders accordingly");
                       }
                       return OrderCart(
                         itemCounts: snapshot.data.docs.length,
@@ -181,7 +181,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       );
                     } else {
                       if (dev) {
-                        print("WE WE WE No order to display2");
+                        printo("No order to display2");
                       }
                       return const Center(
                         child: Text(
@@ -196,7 +196,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             );
           } else {
             if (dev) {
-              print("WE WE WE No order to display1");
+              printo("o order to display1");
             }
             return const Center(
               child: Text(

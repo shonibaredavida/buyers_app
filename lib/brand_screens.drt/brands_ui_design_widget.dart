@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:trial/brand_screens.drt/brands_screen.dart';
 import 'package:trial/items_screen/items_screen.dart';
 import 'package:trial/models/brands_model.dart';
 
 class BrandsUIDesignWidget extends StatefulWidget {
-  Brands? model;
+  final Brands? model;
 
-  BrandsUIDesignWidget({this.model});
+  const BrandsUIDesignWidget({super.key, this.model});
   @override
   State<BrandsUIDesignWidget> createState() => _BrandsUIDesignWidgetState();
 }

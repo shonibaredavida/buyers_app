@@ -4,8 +4,8 @@ import 'package:trial/items_screen/item_details_screen.dart';
 import 'package:trial/models/items_models.dart';
 
 class ItemsUIDesignWidget extends StatefulWidget {
-  Items? model;
-  ItemsUIDesignWidget({this.model});
+  final Items? model;
+  const ItemsUIDesignWidget({super.key, this.model});
   @override
   State<ItemsUIDesignWidget> createState() => _ItemsUIDesignWidgetState();
 }

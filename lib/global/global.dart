@@ -30,3 +30,8 @@ SizedBox sizedBox({double? height, double? width}) {
     width: width ?? 0,
   );
 }
+
+printo(message) {
+  // ignore: avoid_print
+  print("WE WE WE $message`");
+}
