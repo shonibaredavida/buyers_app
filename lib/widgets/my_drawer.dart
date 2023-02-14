@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:trial/global/global.dart';
+import 'package:trial/not_yet_received_parcels_screen/not_yet_received_parcels_screen.dart';
 import 'package:trial/orders_screen/orders_screen.dart';
 import 'package:trial/sellersScreens/home_screen.dart';
 import 'package:trial/splashScreen/my_splash_screen.dart';
@@ -80,14 +81,18 @@ class _MyDrawerState extends State<MyDrawer> {
                     }),
                 //Not Yet Received
                 const Divider(height: 10, thickness: 2, color: Colors.grey),
-                const ListTile(
-                    leading: Icon(Icons.picture_in_picture_alt_rounded,
+                ListTile(
+                    leading: const Icon(Icons.picture_in_picture_alt_rounded,
                         color: Colors.grey),
-                    title: Text("Not Yet Received",
+                    title: const Text("Not Yet Received",
                         style: TextStyle(
                           color: Colors.grey,
                         )),
-                    onTap: null),
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) =>
+                              const NotYetReceivedParcelScreen()));
+                    }),
 
                 //History
                 const Divider(height: 10, thickness: 2, color: Colors.grey),
