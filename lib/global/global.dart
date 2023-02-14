@@ -22,6 +22,8 @@ final itemsImagesList = [
   "slider/13.jpg",
 ];
 
+double countStarsRating = 0.0;
+String titleStarsRating = "";
 bool dev = true;
 
 SizedBox sizedBox({double? height, double? width}) {

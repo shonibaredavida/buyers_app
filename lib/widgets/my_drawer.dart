@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:trial/global/global.dart';
-import 'package:trial/history/history.dart';
+import 'package:trial/history/history_screen.dart';
 import 'package:trial/not_yet_received_parcels_screen/not_yet_received_parcels_screen.dart';
 import 'package:trial/orders_screen/orders_screen.dart';
 import 'package:trial/sellersScreens/home_screen.dart';

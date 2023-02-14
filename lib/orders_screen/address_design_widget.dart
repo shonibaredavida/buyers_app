@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/address_model.dart';
+import 'package:trial/rating_screen/rate_seller.dart';
 import 'package:trial/sellersScreens/home_screen.dart';
 import 'package:trial/splashScreen/my_splash_screen.dart';
 
@@ -95,6 +96,9 @@ class AddressDesign extends StatelessWidget {
           onTap: () {
             if (dev) printo("orderStatus is $orderStatus");
             if (orderStatus == "ended") {
+              //rate seller
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => RateSellerScreen(sellerID: sellerId)));
               //implement reorder the same cart
             } else if (orderStatus == "shifted") {
               FirebaseFirestore.instance
