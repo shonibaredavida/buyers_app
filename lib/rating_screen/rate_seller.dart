@@ -91,12 +91,18 @@ class _RateSellerScreenState extends State<RateSellerScreen> {
             ),
             ElevatedButton(
                 onPressed: () {
+                  if (dev) {
+                    printo("retreiving current seller ratings");
+                  }
                   FirebaseFirestore.instance
                       .collection("sellers")
                       .doc(widget.sellerID)
                       .get()
                       .then((sellerSnap) {
                     if (sellerSnap.data()!['ratings'] == null) {
+                      if (dev) {
+                        printo("seller has no rating");
+                      }
                       //seller isnt rated by any user
                       FirebaseFirestore.instance
                           .collection("sellers")
@@ -106,6 +112,9 @@ class _RateSellerScreenState extends State<RateSellerScreen> {
                       //seller has been rated by atleast a user
                       double previousRating =
                           double.parse(sellerSnap.data()!['ratings']);
+                      if (dev) {
+                        printo("seller has rating: $previousRating ");
+                      }
                       double newSellerRating =
                           (previousRating + countStarsRating) / 2;
                       FirebaseFirestore.instance
@@ -114,11 +123,18 @@ class _RateSellerScreenState extends State<RateSellerScreen> {
                           .update({
                         "ratings": newSellerRating.toString()
                       }).whenComplete(() {
+                        if (dev) {
+                          printo("sending a toast to the user");
+                        }
                         Fluttertoast.showToast(msg: "Seller Rated Succesfully");
                         setState(() {
                           titleStarsRating = "";
                           countStarsRating = 0.0;
                         });
+                        if (dev) {
+                          printo(
+                              "resetting app star rating info. & navigating to splash screen");
+                        }
                         Navigator.push(
                             context,
                             MaterialPageRoute(
