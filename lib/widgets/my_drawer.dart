@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:trial/global/global.dart';
+import 'package:trial/history/history.dart';
 import 'package:trial/not_yet_received_parcels_screen/not_yet_received_parcels_screen.dart';
 import 'package:trial/orders_screen/orders_screen.dart';
 import 'package:trial/sellersScreens/home_screen.dart';
@@ -96,13 +97,16 @@ class _MyDrawerState extends State<MyDrawer> {
 
                 //History
                 const Divider(height: 10, thickness: 2, color: Colors.grey),
-                const ListTile(
-                    leading: Icon(Icons.access_time, color: Colors.grey),
-                    title: Text("History",
+                ListTile(
+                    leading: const Icon(Icons.access_time, color: Colors.grey),
+                    title: const Text("History",
                         style: TextStyle(
                           color: Colors.grey,
                         )),
-                    onTap: null),
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const HistoryScreen()));
+                    }),
 
                 //Search
                 const Divider(height: 10, thickness: 2, color: Colors.grey),
