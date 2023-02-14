@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/address_model.dart';
+import 'package:trial/sellersScreens/home_screen.dart';
 import 'package:trial/splashScreen/my_splash_screen.dart';
 
 class AddressDesign extends StatelessWidget {
@@ -90,9 +93,36 @@ class AddressDesign extends StatelessWidget {
         sizedBox(height: 5),
         GestureDetector(
           onTap: () {
+            if (dev) printo("orderStatus is $orderStatus");
             if (orderStatus == "ended") {
               //implement reorder the same cart
             } else if (orderStatus == "shifted") {
+              FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(sharedPreferences!.getString("uid"))
+                  .collection("orders")
+                  .doc(orderId)
+                  .update({"status": "ended"}).whenComplete(() {
+                if (dev) printo("user order status is \"ended\"");
+                FirebaseFirestore.instance
+                    .collection("orders")
+                    .doc(orderId)
+                    .update({"status": "ended"}).whenComplete(() {
+                  if (dev) printo("seller order status is \"ended\"");
+
+                  //implement push notification to seller
+                  if (dev) printo("Sending notification to seller");
+                  if (dev) printo("Display toast to user");
+
+                  Fluttertoast.showToast(msg: "Confirmation Successful");
+
+                  if (dev) printo("sendng userto homesceen");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
+                });
+              });
               //implement "Parcel Delivered and Received "
             } else if (orderStatus == "normal") {
               Navigator.pop(context);
@@ -124,8 +154,8 @@ class AddressDesign extends StatelessWidget {
                   child: Text(
                     orderStatus == "ended"
                         ? "Do you want to Rate the seller?"
-                        : orderStatus == "Shifted"
-                            ? "Parcel Delivered and Received \n Click to Confirm"
+                        : orderStatus == "shifted"
+                            ? "Parcel Received \n Click to Confirm"
                             : orderStatus == "normal"
                                 ? "Go Back"
                                 : "",
