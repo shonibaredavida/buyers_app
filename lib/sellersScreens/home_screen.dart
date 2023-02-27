@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/sellers.dart';
+import 'package:trial/push_notification/push_notification_system.dart';
 import 'package:trial/sellersScreens/sellers_ui_design_widget.dart';
 import 'package:trial/widgets/my_drawer.dart';
 
@@ -15,6 +16,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    PushNotifcationsSystem pushNotifcationsSystem = PushNotifcationsSystem();
+    pushNotifcationsSystem.generateDeviceRecognitionToken();
+    pushNotifcationsSystem.whenNotficationIsReceived();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
