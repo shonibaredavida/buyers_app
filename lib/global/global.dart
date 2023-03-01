@@ -21,6 +21,8 @@ final itemsImagesList = [
   "slider/12.jpg",
   "slider/13.jpg",
 ];
+String fcmServerToken =
+    'key= AAAA7OeAvQc:APA91bGUDjnyGwuOBNFWczUpYcR0tqhLq9trtxioecRfHHwSMTovlywZaUDaAseMjMdS4Tr3mTQjGFX2gg_vx-ckaBdNIbAuIc8bszwF7daA0ZSBKd7W1fdsgS1KdzkQX3CijOJZPg1T';
 
 double countStarsRating = 0.0;
 String titleStarsRating = "";

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/sellersScreens/home_screen.dart';
+import 'package:http/http.dart' as http;
 
 class PlaceOrderScreen extends StatefulWidget {
   const PlaceOrderScreen({
@@ -20,6 +23,52 @@ class PlaceOrderScreen extends StatefulWidget {
 
 class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
   String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+
+  sendNotifcationToSeller(String? sellerUID, String? orderId) async {
+    await FirebaseFirestore.instance
+        .collection("sellers")
+        .doc(sellerUID)
+        .get()
+        .then((snapshot) {
+      if (snapshot.data()!['sellerDeviceToken'] != null) {
+        String? sellerDeviceToken =
+            snapshot.data()!['sellerDeviceToken'].toString();
+        if (dev) printo("FCM Seller device token: $sellerDeviceToken");
+        if (dev) printo("FCM OderId: $orderId");
+        notificationFormat(
+            sellerDeviceToken, orderId, sharedPreferences!.getString("name"));
+      }
+    });
+  }
+
+  notificationFormat(String sellerDeviceToken, String? orderId, String? name) {
+    Map<String, String> hearderNotification = {
+      'Content-Type': 'application/json',
+      'Authorization': fcmServerToken
+    };
+
+    Map bodyNotification = {
+      'body':
+          'Dear seller, New Order (# $orderId) successfully placed by $name \nPlease Check now',
+      'title': 'New Order'
+    };
+    Map dataMap = {
+      'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+      'id': '1',
+      "status": 'done',
+      'userOrderId': orderId,
+    };
+    Map officialNotificationFormat = {
+      'notification': bodyNotification,
+      'data': dataMap,
+      'priority': 'high',
+      'to': sellerDeviceToken,
+    };
+    http.post(Uri.parse("https://fcm.googleapis.com/fcm/send"),
+        headers: hearderNotification,
+        body: jsonEncode(officialNotificationFormat));
+  }
+
   orderDetails() {
     saveOrderDetailsForUser({
       "addressID": widget.addressID,
@@ -44,7 +93,9 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
         "status": "normal",
       }).whenComplete(() {
         cartMethods.clearCart(context);
+
         //Implement send push Notification
+        sendNotifcationToSeller(widget.sellerUID, orderId);
 
         Fluttertoast.showToast(
             msg: "Congratulations, Your Order has been placed successfully");

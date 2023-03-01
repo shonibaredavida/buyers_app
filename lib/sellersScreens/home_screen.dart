@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    cartMethods.clearCart(context);
     PushNotifcationsSystem pushNotifcationsSystem = PushNotifcationsSystem();
     pushNotifcationsSystem.generateDeviceRecognitionToken();
     pushNotifcationsSystem.whenNotficationIsReceived();
