@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     cartMethods.clearCart(context);
     PushNotifcationsSystem pushNotifcationsSystem = PushNotifcationsSystem();
     pushNotifcationsSystem.generateDeviceRecognitionToken();
-    pushNotifcationsSystem.whenNotficationIsReceived();
+    pushNotifcationsSystem.whenNotficationIsReceived(context);
   }
 
   @override
