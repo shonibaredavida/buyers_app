@@ -3,7 +3,7 @@ import 'package:trial/global/global.dart';
 
 showReusableSnackBar(String title, BuildContext context) {
   SnackBar snackBar = SnackBar(
-    backgroundColor: appDeeperPrimaryColor,
+    backgroundColor: Colors.black,
     duration: const Duration(seconds: 2),
     content: text(title, fontSize: 32, color: Colors.white),
   );
