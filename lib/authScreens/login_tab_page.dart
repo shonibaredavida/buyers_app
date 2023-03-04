@@ -83,7 +83,7 @@ class _LoginTabPageState extends State<LoginTabPage> {
           FirebaseAuth.instance.signOut();
           Navigator.of(context).pop();
           Fluttertoast.showToast(
-              msg: "You have been BLOCKED by Admin \n contact amin@weshop.com");
+              msg: "You have been BLOCKED by Admin \n contact admin@ishop.com");
         }
       } else {
         //user record doesnt exist
