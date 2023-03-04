@@ -4,6 +4,7 @@ import 'package:trial/global/global.dart';
 import 'package:trial/history/history_screen.dart';
 import 'package:trial/not_yet_received_parcels_screen/not_yet_received_parcels_screen.dart';
 import 'package:trial/orders_screen/orders_screen.dart';
+import 'package:trial/search_screen/search_screen.dart';
 import 'package:trial/sellersScreens/home_screen.dart';
 import 'package:trial/splashScreen/my_splash_screen.dart';
 
@@ -40,7 +41,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
                 sizedBox(height: 12),
                 Text(
-                  sharedPreferences!.getString("name")!,
+                  sharedPreferences!.getString("name")!.toTitleCase(),
                   style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 20,
@@ -110,19 +111,24 @@ class _MyDrawerState extends State<MyDrawer> {
 
                 //Search
                 const Divider(height: 10, thickness: 2, color: Colors.grey),
-                const ListTile(
-                    leading: Icon(Icons.search, color: Colors.grey),
-                    title: Text("Search",
+                ListTile(
+                    leading: const Icon(Icons.search, color: Colors.grey),
+                    title: const Text("Search",
                         style: TextStyle(
                           color: Colors.grey,
                         )),
-                    onTap: null),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SearchScreen()));
+                    }),
 
                 //LogOut
                 const Divider(height: 10, thickness: 2, color: Colors.grey),
                 ListTile(
                     leading: const Icon(Icons.exit_to_app, color: Colors.grey),
-                    title: const Text("LogOut",
+                    title: const Text("Logout",
                         style: TextStyle(
                           color: Colors.grey,
                         )),
