@@ -23,13 +23,6 @@ class _BrandsScreenState extends State<BrandsScreen> {
       drawer: const MyDrawer(),
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: const Text(
-          "widget",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(

@@ -1,11 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:trial/functions/functions.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/sellers.dart';
 import 'package:trial/push_notification/push_notification_system.dart';
 import 'package:trial/sellersScreens/sellers_ui_design_widget.dart';
+import 'package:trial/splashScreen/my_splash_screen.dart';
 import 'package:trial/widgets/my_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,13 +19,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  restrictBlockedUsers() async {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(sharedPreferences!.getString("uid"))
+        .get()
+        .then((snapshot) {
+      if (snapshot.data()!['status'] != "approved") {
+        showReusableSnackBar(
+            "Your Account is Blocked.\n Kindly contact Admin (admin@ishop.com )",
+            context);
+        FirebaseAuth.instance.signOut();
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const MySplashScreen()));
+      } else {
+        cartMethods.clearCart(context);
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    cartMethods.clearCart(context);
+
     PushNotifcationsSystem pushNotifcationsSystem = PushNotifcationsSystem();
     pushNotifcationsSystem.generateDeviceRecognitionToken();
     pushNotifcationsSystem.whenNotficationIsReceived(context);
+    restrictBlockedUsers();
   }
 
   @override
