@@ -53,7 +53,7 @@ class _SaveNewAddressScreenState extends State<SaveNewAddressScreen> {
         onPressed: () {
           if (formKey.currentState!.validate()) {
             completeAddress =
-                "${streetNumber.text.trim()}, ${flatHouseNumber.text.trim()}, ${city.text.trim()}, ${stateCountry.text.trim()} ";
+                "${streetNumber.text.trim()}, ${flatHouseNumber.text.trim()}, ${city.text.trim().toTitleCase()}, ${stateCountry.text.trim().toTitleCase()} ";
 
             dev ? printo("saving address to firestore") : null;
             FirebaseFirestore.instance
@@ -62,12 +62,12 @@ class _SaveNewAddressScreenState extends State<SaveNewAddressScreen> {
                 .collection("userAddress")
                 .doc(DateTime.now().millisecondsSinceEpoch.toString())
                 .set({
-              "name": name.text.trim(),
+              "name": name.text.trim().toTitleCase(),
               "phoneNumber": phoneNumber.text.trim(),
               "flatHouseNumber": flatHouseNumber.text.trim(),
-              "city": city.text.trim(),
+              "city": city.text.trim().toTitleCase(),
               "streetNumber": streetNumber.text.trim(),
-              "stateCountry": stateCountry.text.trim(),
+              "stateCountry": stateCountry.text.trim().toTitleCase(),
               "completeAddress": completeAddress,
             }).then((value) {
               Fluttertoast.showToast(msg: "New Shipment Address Saved");

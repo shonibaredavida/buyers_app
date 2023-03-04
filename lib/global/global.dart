@@ -24,6 +24,15 @@ final itemsImagesList = [
 String fcmServerToken =
     'key= AAAA7OeAvQc:APA91bGUDjnyGwuOBNFWczUpYcR0tqhLq9trtxioecRfHHwSMTovlywZaUDaAseMjMdS4Tr3mTQjGFX2gg_vx-ckaBdNIbAuIc8bszwF7daA0ZSBKd7W1fdsgS1KdzkQX3CijOJZPg1T';
 
+extension StringCasingExtension on String {
+  String capitalize() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.capitalize())
+      .join(' ');
+}
+
 double countStarsRating = 0.0;
 String titleStarsRating = "";
 bool dev = true;

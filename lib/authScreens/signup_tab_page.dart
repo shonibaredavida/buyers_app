@@ -24,6 +24,8 @@ class _SignupTaPageState extends State<SignupTaPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  String? formattedEmail;
+  String? formattedUsername;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String downloadUrlImage = "";
   XFile? imgXFile;
@@ -42,7 +44,7 @@ class _SignupTaPageState extends State<SignupTaPage> {
     FirebaseFirestore.instance.collection("users").doc(currentUser.uid).set({
       "uid": currentUser.uid,
       "email": currentUser.email,
-      "name": namecontroller.text.trim(),
+      "name": formattedUsername.toString(),
       "photoUrl": downloadUrlImage,
       "status": "approved",
       "userCart": ["initialValue"],
@@ -52,7 +54,8 @@ class _SignupTaPageState extends State<SignupTaPage> {
     sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences!.setString("uid", currentUser.uid);
     await sharedPreferences!.setString("email", currentUser.email!);
-    await sharedPreferences!.setString("name", namecontroller.text.trim());
+    await sharedPreferences!
+        .setString("name", formattedUsername.toString().toTitleCase());
     await sharedPreferences!.setString("photoUrl", downloadUrlImage);
     await sharedPreferences!.setStringList("userCart", ["initialValue"]).then(
         (value) => Navigator.push(context,
@@ -73,7 +76,7 @@ class _SignupTaPageState extends State<SignupTaPage> {
     });
 
     if (currentUser != null) {
-      if (dev) printo("logged in `");
+      if (dev) printo("logged in ");
       //save the user information to Database n save locally
       saveInfoToFireStoreAndLocally(currentUser!);
     }
@@ -92,6 +95,9 @@ class _SignupTaPageState extends State<SignupTaPage> {
         // email n name, password, confirmatio n given
         if (passwordController.text == confirmPasswordController.text) {
           //password n confirmation field are same
+          formattedUsername = namecontroller.text.trim().toTitleCase();
+          formattedEmail = emailController.text.trim().toLowerCase();
+
           showDialog(
               context: context,
               builder: (c) {
@@ -116,7 +122,7 @@ class _SignupTaPageState extends State<SignupTaPage> {
 
           //2~  Upload user info to firebase
           saveInformationToDatabase(
-              emailController.text.trim(), passwordController.text.trim());
+              formattedEmail, passwordController.text.trim());
         } else {
           // password n confirmation field are not match
           Fluttertoast.showToast(

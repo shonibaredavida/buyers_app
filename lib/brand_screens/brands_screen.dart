@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:trial/brand_screens.drt/brands_ui_design_widget.dart';
+import 'package:trial/brand_screens/brands_ui_design_widget.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/brands_model.dart';
 import 'package:trial/models/sellers.dart';

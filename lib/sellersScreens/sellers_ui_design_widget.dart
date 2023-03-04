@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating_nsafe/smooth_star_rating.dart';
-import 'package:trial/brand_screens.drt/brands_screen.dart';
+import 'package:trial/brand_screens/brands_screen.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/sellers.dart';
 
