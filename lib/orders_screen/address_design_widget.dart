@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trial/global/global.dart';
 import 'package:trial/models/address_model.dart';
+import 'package:trial/push_notification/push_notification_system.dart';
 import 'package:trial/rating_screen/rate_seller.dart';
 import 'package:trial/sellersScreens/home_screen.dart';
 import 'package:trial/splashScreen/my_splash_screen.dart';
@@ -115,6 +116,7 @@ class AddressDesign extends StatelessWidget {
                   if (dev) printo("seller order status is \"ended\"");
 
                   //implement push notification to seller
+                  sendNotifcationToSeller(sellerId, orderId.toString());
                   if (dev) printo("Sending notification to seller");
                   if (dev) printo("Display toast to user");
 
@@ -174,5 +176,24 @@ class AddressDesign extends StatelessWidget {
         )
       ],
     );
+  }
+
+  sendNotifcationToSeller(sellerUID, String orderId) {
+    FirebaseFirestore.instance
+        .collection("sellers")
+        .doc(sellerId)
+        .get()
+        .then((sellerSnapshot) {
+      {
+        if (sellerSnapshot.data() != null) {
+          notificationFormat(
+              sellerDeviceToken: sellerSnapshot.data()!["sellerDeviceToken"],
+              orderId: orderId,
+              notificationBody:
+                  "Order (# $orderId) has been Successfully delivered to ${sharedPreferences!.getString("name")}",
+              notificationTitle: "Parcel Delivered");
+        }
+      }
+    });
   }
 }
