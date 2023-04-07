@@ -1,6 +1,6 @@
 # trial
 
-A new Flutter project.
+Thus is an eCommerce buyers app used to buy items uploaded via the buyers app
 
 ## Getting Started
 
